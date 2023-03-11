@@ -18,6 +18,9 @@ public class DTOFactory{
         dto.nome = model.getNome();
         dto.artista = model.getArtista();
         dto.uuid = model.getUuid().toString();
+        if(model.getLikes()!=null) {
+            dto.likes = model.getLikes().stream().count();
+        }
         return dto;
     }
 
@@ -32,7 +35,7 @@ public class DTOFactory{
         PlaylistDTO dto = new PlaylistDTO();
         dto.uuid = model.getUuid().toString();
         dto.dono = modelToDTO(model.getDono());
-        dto.musicas = model.getMusicas().stream().map(DTOFactory::modelToDTO).collect(Collectors.toList());
+        dto.musicas = model.getMusicas().stream().map(DTOFactory::modelToDTO).collect(Collectors.toSet());
         return dto;
     }
 

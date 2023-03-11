@@ -14,5 +14,7 @@ public class MusicaDTO implements IDTOGet {
 
     public String album;
 
+    public long likes;
+
 }
 

@@ -5,10 +5,11 @@ import br.com.anjs.musica.dto.musica.MusicaDTO;
 import br.com.anjs.musica.dto.pessoa.PessoaDTO;
 
 import java.util.List;
+import java.util.Set;
 
 public class PlaylistDTO implements IDTOGet {
 
     public String uuid;
     public PessoaDTO dono;
-    public List<MusicaDTO> musicas;
+    public Set<MusicaDTO> musicas;
 }

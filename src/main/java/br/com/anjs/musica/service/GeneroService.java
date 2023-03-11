@@ -2,14 +2,18 @@ package br.com.anjs.musica.service;
 
 import br.com.anjs.musica.dto.genero.GeneroDTO;
 import br.com.anjs.musica.dto.genero.PostGeneroDTO;
+import br.com.anjs.musica.exceptions.EntidadeNaoEncontrada;
 import br.com.anjs.musica.factory.DTOFactory;
+import br.com.anjs.musica.factory.ExceptionFactory;
 import br.com.anjs.musica.factory.ModelFactory;
 import br.com.anjs.musica.model.Genero;
 import br.com.anjs.musica.repository.GeneroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -29,11 +33,9 @@ public class GeneroService implements ICrudService<GeneroDTO, PostGeneroDTO>{
     }
 
     @Override
-    public GeneroDTO edit(String uuid, PostGeneroDTO dto) {
-        Genero model = repository.findByUUID(uuid);
-        if(!dto.nome.isEmpty() && !dto.nome.isBlank()) {
-            model.setNome(dto.nome);
-        }
+    public GeneroDTO edit(String uuid, PostGeneroDTO dto) throws EntidadeNaoEncontrada {
+        Optional<Genero> optional = Optional.of(repository.findByUUID(uuid));
+        Genero model = optional.orElseThrow(() -> ExceptionFactory.naoEncontrada("Genero não encontrada"));
         repository.save(model);
         return DTOFactory.modelToDTO(model);
     }
@@ -45,17 +47,19 @@ public class GeneroService implements ICrudService<GeneroDTO, PostGeneroDTO>{
     }
 
     @Override
-    public void delete(String uuid) {
+    public void delete(String uuid) throws EntidadeNaoEncontrada {
 
-        Genero model = repository.findByUUID(uuid);
-        repository.delete(model);
+        Optional<Genero> model = Optional.of(repository.findByUUID(uuid));
+
+        repository.delete(model.orElseThrow(() -> ExceptionFactory.naoEncontrada("Genero não encontrada")));
 
     }
 
     @Override
-    public GeneroDTO findByUUID(String uuid){
-
-        return DTOFactory.modelToDTO(repository.findByUUID(uuid));
+    public GeneroDTO findByUUID(String uuid) throws EntidadeNaoEncontrada {
+        Optional<Genero> optional = Optional.of(repository.findByUUID(uuid));
+        Genero model = optional.orElseThrow(() -> ExceptionFactory.naoEncontrada("Genero não encontrada"));
+        return DTOFactory.modelToDTO(model);
     }
 
 

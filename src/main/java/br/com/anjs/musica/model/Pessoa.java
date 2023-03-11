@@ -1,7 +1,7 @@
 package br.com.anjs.musica.model;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Pessoa implements IModel {
@@ -17,7 +17,7 @@ public class Pessoa implements IModel {
     private String nome;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Musica> likes;
+    private Set<Musica> likes;
 
     public Long getId() {
         return id;
@@ -44,11 +44,11 @@ public class Pessoa implements IModel {
         this.nome = nome;
     }
 
-    public List<Musica> getLikes() {
+    public Set<Musica> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<Musica> likes) {
+    public void setLikes(Set<Musica> likes) {
         this.likes = likes;
     }
 }
