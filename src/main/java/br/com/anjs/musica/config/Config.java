@@ -3,7 +3,6 @@ package br.com.anjs.musica.config;
 import br.com.anjs.musica.model.Musica;
 import br.com.anjs.musica.repository.MusicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -20,7 +19,7 @@ public class Config {
         musica.setAlbum("Meteora");
         musica.setArtista("Linkin Park");
         musica.setNome("Numb");
-        musica.setUuid(UUID.randomUUID());
+        musica.setUuid(UUID.randomUUID().toString());
         System.out.println(musica);
         repository.saveAndFlush(musica);
     }

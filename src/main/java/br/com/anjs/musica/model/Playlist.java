@@ -3,7 +3,6 @@ package br.com.anjs.musica.model;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 public class Playlist implements IModel {
@@ -12,8 +11,8 @@ public class Playlist implements IModel {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID uuid;
+    @Column(unique = true)
+    private String uuid;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Pessoa dono;
@@ -29,11 +28,12 @@ public class Playlist implements IModel {
         this.id = id;
     }
 
-    public UUID getUuid() {
+    @Override
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 

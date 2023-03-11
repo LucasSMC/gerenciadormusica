@@ -1,12 +1,7 @@
 package br.com.anjs.musica.model;
 
-import br.com.anjs.musica.dto.MusicaDTO;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.UUID;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Musica implements IModel {
@@ -15,13 +10,17 @@ public class Musica implements IModel {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private UUID uuid;
+    @Column(unique = true)
+    private String uuid;
 
     private String nome;
 
-    private String Artista;
+    private String artista;
 
-    private String Album;
+    private String album;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Pessoa> likes;
 
 
     public Long getId() {
@@ -32,11 +31,12 @@ public class Musica implements IModel {
         this.id = id;
     }
 
-    public UUID getUuid() {
+    @Override
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
@@ -49,21 +49,26 @@ public class Musica implements IModel {
     }
 
     public String getArtista() {
-        return Artista;
+        return artista;
     }
 
     public void setArtista(String artista) {
-        Artista = artista;
+        this.artista = artista;
     }
 
     public String getAlbum() {
-        return Album;
+        return album;
     }
 
     public void setAlbum(String album) {
-        Album = album;
+        this.album = album;
     }
 
-    public Musica(){}
+    public List<Pessoa> getLikes() {
+        return likes;
+    }
 
+    public void setLikes(List<Pessoa> likes) {
+        this.likes = likes;
+    }
 }

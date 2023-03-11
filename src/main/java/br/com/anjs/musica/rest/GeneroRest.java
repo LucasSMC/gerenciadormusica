@@ -1,11 +1,7 @@
 package br.com.anjs.musica.rest;
 
-import br.com.anjs.musica.dto.GeneroDTO;
-import br.com.anjs.musica.dto.MusicaDTO;
-import br.com.anjs.musica.factory.DTOFactory;
-import br.com.anjs.musica.factory.ModelFactory;
+import br.com.anjs.musica.dto.genero.PostGeneroDTO;
 import br.com.anjs.musica.service.GeneroService;
-import br.com.anjs.musica.service.MusicaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,25 +14,25 @@ public class GeneroRest {
     @Autowired
     private GeneroService service;
 
-    @GetMapping
+    @GetMapping(produces = "application/json")
     public ResponseEntity getAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(service.findAll().stream().map(DTOFactory::modelToDTO));
+
+        return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
     }
 
     @PostMapping
-    public ResponseEntity criar(GeneroDTO dto) {
-        return ResponseEntity.status(HttpStatus.OK).body(DTOFactory.modelToDTO(service.save(ModelFactory.DTOToModel(dto))));
+    public ResponseEntity criar(@RequestBody PostGeneroDTO dto) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.save(dto));
     }
 
-    @PutMapping
-    public ResponseEntity editar(GeneroDTO dto) {
-        return ResponseEntity.status(HttpStatus.OK).body(DTOFactory.modelToDTO(service.edit(ModelFactory.DTOToModel(dto))));
+    @PutMapping("/<uuid>")
+    public ResponseEntity editar(@PathVariable("uuid") String uuid, @RequestBody PostGeneroDTO dto) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.edit(uuid, dto));
     }
 
-    @DeleteMapping
-    public ResponseEntity deletar(GeneroDTO dto) {
-
-        service.delete(service.findByUUID(dto.uuid));
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity deletar(@PathVariable("uuid") String uuid) {
+        service.delete(uuid);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

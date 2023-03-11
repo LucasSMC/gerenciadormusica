@@ -1,10 +1,6 @@
 package br.com.anjs.musica.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.UUID;
+import javax.persistence.*;
 
 @Entity
 public class Genero implements IModel {
@@ -13,8 +9,8 @@ public class Genero implements IModel {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID uuid;
+    @Column(unique = true)
+    private String uuid;
 
     private String nome;
 
@@ -26,11 +22,12 @@ public class Genero implements IModel {
         this.id = id;
     }
 
-    public UUID getUuid() {
+    @Override
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 

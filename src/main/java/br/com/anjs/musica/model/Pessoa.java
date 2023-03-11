@@ -1,12 +1,7 @@
 package br.com.anjs.musica.model;
 
-import br.com.anjs.musica.dto.PessoaDTO;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.UUID;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Pessoa implements IModel {
@@ -16,10 +11,13 @@ public class Pessoa implements IModel {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID uuid;
+    @Column(unique = true)
+    private String uuid;
 
     private String nome;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Musica> likes;
 
     public Long getId() {
         return id;
@@ -29,11 +27,12 @@ public class Pessoa implements IModel {
         this.id = id;
     }
 
-    public UUID getUuid() {
+    @Override
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
@@ -45,7 +44,11 @@ public class Pessoa implements IModel {
         this.nome = nome;
     }
 
-    public Pessoa(){}
+    public List<Musica> getLikes() {
+        return likes;
+    }
 
-
+    public void setLikes(List<Musica> likes) {
+        this.likes = likes;
+    }
 }

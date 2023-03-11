@@ -1,45 +1,45 @@
 package br.com.anjs.musica.factory;
 
-import br.com.anjs.musica.dto.*;
+import br.com.anjs.musica.dto.genero.GeneroDTO;
+import br.com.anjs.musica.dto.musica.MusicaDTO;
+import br.com.anjs.musica.dto.pessoa.PessoaDTO;
+import br.com.anjs.musica.dto.playlist.PlaylistDTO;
 import br.com.anjs.musica.model.*;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
 @Component
-public class DTOFactory implements IDTOFactory {
+public class DTOFactory{
 
-    public IDTO modelToDTO(IModel model) {
-        return null;
-    }
-    public MusicaDTO modelToDTO(Musica model) {
+    public static MusicaDTO modelToDTO(Musica model) {
         MusicaDTO dto = new MusicaDTO();
         dto.album = model.getAlbum();
         dto.nome = model.getNome();
         dto.artista = model.getArtista();
-        dto.uuid = model.getUuid();
+        dto.uuid = model.getUuid().toString();
         return dto;
     }
 
-    public PessoaDTO modelToDTO(Pessoa model) {
+    public static PessoaDTO modelToDTO(Pessoa model) {
         PessoaDTO dto = new PessoaDTO();
         dto.nome = model.getNome();
-        dto.uuid = model.getUuid();
+        dto.uuid = model.getUuid().toString();
         return dto;
     }
 
-    public PlaylistDTO modelToDTO(Playlist model) {
+    public static PlaylistDTO modelToDTO(Playlist model) {
         PlaylistDTO dto = new PlaylistDTO();
-        dto.uuid = model.getUuid();
+        dto.uuid = model.getUuid().toString();
         dto.dono = modelToDTO(model.getDono());
-        dto.musicas = model.getMusicas().stream().map(this::modelToDTO).collect(Collectors.toList());
+        dto.musicas = model.getMusicas().stream().map(DTOFactory::modelToDTO).collect(Collectors.toList());
         return dto;
     }
 
-    public GeneroDTO modelToDTO(Genero model) {
+    public static GeneroDTO modelToDTO(Genero model) {
         GeneroDTO dto = new GeneroDTO();
         dto.nome = model.getNome();
-        dto.uuid = model.getUuid();
+        dto.uuid = model.getUuid().toString();
         return dto;
     }
 

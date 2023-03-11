@@ -1,20 +1,19 @@
 package br.com.anjs.musica.service;
 
-import br.com.anjs.musica.dto.IDTO;
-import br.com.anjs.musica.model.IModel;
+import br.com.anjs.musica.dto.IDTOGet;
+import br.com.anjs.musica.dto.IDTOPost;
 
 import java.util.List;
-import java.util.UUID;
 
-public interface ICrudService<T extends IModel> {
+public interface ICrudService<M extends IDTOGet,DTO extends IDTOPost> {
 
-    T save(T dto);
+    M save(DTO dto);
 
-    T edit(T dto);
+    M edit(String uuid, DTO dto);
 
-    List<T> findAll();
+    List<M> findAll();
 
-    void delete(T dto);
+    void delete(String uuid);
 
-    T findByUUID(UUID uuid);
+    M findByUUID(String uuid);
 }
