@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/playlists")
-@Tag(name = "Playlists",description = "Endpoints da API de Playlists")
+@Tag(name = "Playlists", description = "Endpoints da API de Playlists")
 public class PlaylistRest {
     @Autowired
     private PlaylistService service;

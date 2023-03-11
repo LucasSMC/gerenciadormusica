@@ -1,6 +1,5 @@
 package br.com.anjs.musica.rest;
 
-import br.com.anjs.musica.dto.genero.GeneroDTO;
 import br.com.anjs.musica.dto.musica.MusicaDTO;
 import br.com.anjs.musica.dto.musica.PostMusicaDTO;
 import br.com.anjs.musica.exceptions.EntidadeNaoEncontrada;
